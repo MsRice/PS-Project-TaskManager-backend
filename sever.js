@@ -10,7 +10,7 @@ const taskRouter = require("./routes/taskRouter.js");
 
 app.use(express.urlencoded());
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: process.env.FRONT_URL_PORT }));
 
 app.get("/", (req, res) => {
   res.send("API is running 🚀");

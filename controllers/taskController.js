@@ -30,19 +30,51 @@ async function deleteTask(req, res) {
     res.status(400).json({ error: error.message });
   }
 }
+const ALLOWED_UPDATES = [
+  "title",
+  "description",
+  "status",
+  "todos",
+  "tags",
+  "dueDate",
+  "area",
+];
 
 async function updateTask(req, res) {
   try {
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
+    const updates = {};
+
+    // Doing this so i cant accidently pass anythibg wrong
+
+    Object.keys(req.body).forEach((key) => {
+      if (ALLOWED_UPDATES.includes(key)) {
+        updates[key] = req.body[key];
+      }
     });
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ message: "No valid fields provided" });
+    }
+
+    // ////////////////////////////////
+
+    const updatedTask = await Task.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id },
+      { $set: updates },
+      { new: true, runValidators: true },
+    );
+
+    if (!updatedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
     res.status(200).json(updatedTask);
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });
   }
 }
+
 async function getTask(req, res) {
   try {
     const tasks = await Task.findOne({

@@ -94,7 +94,19 @@ async function login(req, res) {
   }
 }
 
-// This func is not in use for production -- dev only 😝
+async function getUser(req, res) {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    return res.status(500).json({ message: "Token is invalid or expired" });
+  }
+}
+
+// These func is not in use for production -- dev only 😝
 async function getUsers(req, res) {
   try {
     const users = await User.find({});
@@ -115,12 +127,17 @@ async function deleteUser(req, res) {
   }
 }
 
-async function updateUser(req, res) {
+async function addArea(req, res) {
+  const { area } = req.body;
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { $push: { areas: area } },
+      {
+        new: true,
+        runValidators: true,
+      },
+    ).select("-password");
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error(error);
@@ -132,6 +149,7 @@ module.exports = {
   registration,
   login,
   getUsers,
+  getUser,
   deleteUser,
-  updateUser,
+  addArea,
 };

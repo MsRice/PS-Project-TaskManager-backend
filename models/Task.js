@@ -13,7 +13,7 @@ const todoSchema = new Schema(
       default: false,
     },
   },
-  { _id: false },
+  { _id: true },
 );
 
 const taskSchema = new Schema({
@@ -24,8 +24,8 @@ const taskSchema = new Schema({
   },
 
   area: {
-    type: String,
-    trim: true,
+    name: { type: String, required: true },
+    color: { type: String },
   },
 
   description: {
