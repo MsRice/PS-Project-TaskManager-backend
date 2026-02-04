@@ -11,7 +11,7 @@ router.get("/me", auth, userController.getUser);
 router.patch("/me/areas", auth, userController.addArea);
 
 // For Test and dev
-router.get("/", userController.getUsers);
+// router.get("/", userController.getUsers);
 router.delete("/:id", userController.deleteUser); // Strech Goal : Delete your account
 
 module.exports = router;
