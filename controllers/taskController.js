@@ -2,7 +2,6 @@ const { validate } = require("../models/Task.js");
 const Task = require("../models/Task.js");
 
 async function getUsersTasks(req, res) {
-  console.log("req.user:", req.user);
   try {
     const tasks = await Task.find({ userId: req.user.id });
     res.status(200).json(tasks);
