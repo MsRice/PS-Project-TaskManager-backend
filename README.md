@@ -5,8 +5,7 @@
   - [One Grain - Backend](#one-grain---backend)
 - [Design Philosophy](#design-philosophy)
 - [Tech Stack](#tech-stack)
-- [Data Models](#data-models)
-  - [Data Models](#data-models)
+- [Production Deployment](#production-deployment)
 - [How to Run](#how-to-run)
 - [Author](#author)
 
@@ -36,7 +35,10 @@ It is designed with clear data ownership, secure access control, and scalable CR
 - Security: bcrypt
 - Environment Management: dotenv
 
-## Data Models
+## Production Deployment
+
+👉🏾 [Companion Frontend](https://ps-project-taskmanager-frontend.onrender.com)
+👉🏾 [Check It Out Live](https://ps-project-taskmanager-backend.onrender.com)
 
 ### User Model
 
